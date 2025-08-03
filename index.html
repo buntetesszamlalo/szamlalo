@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TNL97CTVG6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TNL97CTVG6');
-</script>
   <meta charset="UTF-8">
   <title>Kötelezettségszegési bírság számláló</title>
   <style>
@@ -19,7 +10,11 @@
       padding: 2rem;
       color: #2c3e50;
     }
-
+    .container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+	}
     h1 {
       font-size: 2.2rem;
       font-weight: bold;
@@ -84,7 +79,7 @@
   </style>
 </head>
 <body>
-
+<div class="container">
   <h1>Kötelezettségszegési bírság számláló</h1>
 
   <div class="counter">
@@ -113,7 +108,7 @@
   </div>
     <!-- Future estimate header and paragraph -->
   <div class="explanation-header">
-    Mennyi lesz a büntetés 2026 április 30-án?
+    Mennyi lesz a büntetés összege 2026 április 30-án?
   </div>
   <div class="explanation-text">
     397,5 forintos euró árfolyammal számolva <strong>352 milliárd</strong> lesz a büntetés összege. Ez <strong>37 ezer forintot</strong> jelent állampolgáronként, illetve <strong>több mint 75 ezer forintot</strong> foglalkoztatottanként.
@@ -155,6 +150,6 @@
     updateCounters();
     setInterval(updateCounters, 1000);
   </script>
-
+</div>
 </body>
 </html>
