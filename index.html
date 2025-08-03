@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Kötelezettségszegési bírság számláló</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 2rem;
+      color: #2c3e50;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #d63031;
+    }
+
+    .counter {
+      background: #fff;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .header {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #6c757d;
+      margin-bottom: 1.2rem;
+    }
+
+    .value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .explanation-header {
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 4rem;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    .explanation-text {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .explanation-text a {
+      color: #0984e3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .explanation-text a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Kötelezettségszegési bírság számláló</h1>
+
+  <div class="counter">
+    <div class="header">Teljes tartozás</div>
+    <div class="subtitle">(397,5 forintos euró árfolyammal számolva.)</div>
+    <div class="value" id="counter1">Számítás...</div>
+  </div>
+
+  <div class="counter">
+    <div class="header">Egy állampolgárra jutó tartozás</div>
+    <div class="subtitle">(9.539.502 főre számolva)</div>
+    <div class="value" id="counter2">Számítás...</div>
+  </div>
+
+  <div class="counter">
+    <div class="header">Egy foglalkoztatottra jutó tartozás</div>
+    <div class="subtitle">(4.679.000 főre számolva)</div>
+    <div class="value" id="counter3">Számítás...</div>
+  </div>
+
+  <!-- Explanatory section -->
+  <div class="explanation-header">Miért kapja Magyarország a büntetést?</div>
+  <div class="explanation-text">
+    A magyar kormány nem tett eleget az igazságos menekültügyi eljárás biztosításához való kötelezettségének.
+    <a href="https://curia.europa.eu/jcms/upload/docs/application/pdf/2024-06/cp240099hu.pdf" target="_blank" rel="noopener noreferrer">(Forrás)</a>
+  </div>
+    <!-- Future estimate header and paragraph -->
+  <div class="explanation-header">
+    Mennyi lesz a büntetés összege 2026 április 30-án?
+  </div>
+  <div class="explanation-text">
+    397,5 forintos euró árfolyammal számolva <strong>352 milliárd</strong> lesz a büntetés összege. Ez <strong>37 ezer forintot</strong> jelent állampolgáronként, illetve <strong>több mint 75 ezer forintot</strong> foglalkoztatottanként.
+  </div>
+  
+    <footer style="text-align: center; margin-top: 3rem; font-size: 0.9rem;">
+    <a href="https://forms.gle/XFmjA6QaqVuTaabT6" target="_blank" rel="noopener noreferrer" style="color: #555; text-decoration: none;">
+      Kapcsolat
+    </a>
+  </footer>
+
+
+  <script>
+    const referenceDate = new Date("2024-06-13T00:00:00+02:00"); // CET base
+
+    function formatHUF(number) {
+      return number.toLocaleString("hu-HU", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }) + " Ft";
+    }
+
+    function updateCounters() {
+      const cetNowStr = new Date().toLocaleString("en-US", { timeZone: "Europe/Paris" });
+      const now = new Date(cetNowStr);
+
+      const secondsPassed = Math.floor((now - referenceDate) / 1000);
+      const base = secondsPassed * 11.574 + 200_000_000;
+      const totalHUF = base * 397.5;
+
+      const perCitizen = totalHUF / 9539502;
+      const perEmployed = totalHUF / 4679000;
+
+      document.getElementById("counter1").textContent = formatHUF(totalHUF);
+      document.getElementById("counter2").textContent = formatHUF(perCitizen);
+      document.getElementById("counter3").textContent = formatHUF(perEmployed);
+    }
+
+    updateCounters();
+    setInterval(updateCounters, 1000);
+  </script>
+
+</body>
+</html>
