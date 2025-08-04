@@ -44,11 +44,18 @@
       margin-bottom: 1.2rem;
     }
 
-    .value {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #FF0000;
-    }
+.value {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  font-family: 'Courier New', Courier, monospace; /* ✅ Monospace for stability */
+  letter-spacing: 0.05em; /* ✅ Slight spacing */
+  display: inline-block;
+  min-width: 18ch; /* ✅ Prevent width changes */
+  text-align: center;
+  color: red
+}
+
 
     .explanation-header {
       font-size: 1.8rem;
@@ -120,36 +127,44 @@
     </a>
   </footer>
 
+<script>
+  // Reference: 13 June 2024, 00:00:00 CET = UTC+2
+  const referenceDateUTC = Date.UTC(2024, 5, 13, 0, 0, 0); // June = 5 in JS Date
 
-  <script>
-    const referenceDate = new Date("2024-06-13T00:00:00+02:00"); // CET base
+  const CET_OFFSET_MS = 2 * 60 * 60 * 1000;
 
-    function formatHUF(number) {
-      return number.toLocaleString("hu-HU", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      }) + " Ft";
-    }
+  function formatHUF(number) {
+    return number.toLocaleString("hu-HU", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }) + " Ft";
+  }
 
-    function updateCounters() {
-      const cetNowStr = new Date().toLocaleString("en-US", { timeZone: "Europe/Paris" });
-      const now = new Date(cetNowStr);
+  function updateCounters() {
+    const nowUTC = Date.now();
+    const nowCET = nowUTC + CET_OFFSET_MS;
 
-      const secondsPassed = Math.floor((now - referenceDate) / 1000);
-      const base = secondsPassed * 11.574 + 200_000_000;
-      const totalHUF = base * 397.5;
+    const msPassed = nowCET - referenceDateUTC;
+    const secondsPassed = msPassed / 1000;
 
-      const perCitizen = totalHUF / 9539502;
-      const perEmployed = totalHUF / 4679000;
+    const base = secondsPassed * 11.574 + 200_000_000;
+    const totalHUF = base * 397.5;
 
-      document.getElementById("counter1").textContent = formatHUF(totalHUF);
-      document.getElementById("counter2").textContent = formatHUF(perCitizen);
-      document.getElementById("counter3").textContent = formatHUF(perEmployed);
-    }
+    const perCitizen = totalHUF / 9539502;
+    const perEmployed = totalHUF / 4679000;
 
-    updateCounters();
-    setInterval(updateCounters, 1000);
-  </script>
+    document.getElementById("counter1").textContent = formatHUF(totalHUF);
+    document.getElementById("counter2").textContent = formatHUF(perCitizen);
+    document.getElementById("counter3").textContent = formatHUF(perEmployed);
+  }
+
+  // 🔁 Update counters 50 times per second
+  setInterval(updateCounters, 20);
+</script>
+
+
+
+
 </div>
 </body>
 </html>
